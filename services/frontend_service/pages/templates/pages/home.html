@@ -1,0 +1,162 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Trang chủ - E-Commerce{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-5xl font-bold mb-4">Chào mừng đến E-Commerce</h1>
+        <p class="text-xl mb-8">Hệ thống thương mại điện tử hiện đại với kiến trúc microservices</p>
+        <a href="{% url 'pages:products_list' %}" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 inline-block">
+            Khám phá ngay
+        </a>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">Danh mục sản phẩm</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+        <a href="{% url 'pages:products_list' %}?category=Điện thoại & Tablet" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">📱</div>
+            <h3 class="font-semibold">Điện thoại & Tablet</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Laptop & Máy tính" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">💻</div>
+            <h3 class="font-semibold">Laptop & Máy tính</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Âm thanh & Phụ kiện" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">🎧</div>
+            <h3 class="font-semibold">Âm thanh & Phụ kiện</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Thời trang Nam" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">👔</div>
+            <h3 class="font-semibold">Thời trang Nam</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Thời trang Nữ" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">👗</div>
+            <h3 class="font-semibold">Thời trang Nữ</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Đồ gia dụng" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">🏠</div>
+            <h3 class="font-semibold">Đồ gia dụng</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Sách & Văn phòng phẩm" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">📚</div>
+            <h3 class="font-semibold">Sách & VPP</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Thể thao & Du lịch" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">⚽</div>
+            <h3 class="font-semibold">Thể thao & Du lịch</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Mẹ & Bé" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">👶</div>
+            <h3 class="font-semibold">Mẹ & Bé</h3>
+        </a>
+        <a href="{% url 'pages:products_list' %}?category=Làm đẹp & Sức khỏe" class="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition cursor-pointer">
+            <div class="text-4xl mb-4">💄</div>
+            <h3 class="font-semibold">Làm đẹp & Sức khỏe</h3>
+        </a>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Sản phẩm nổi bật</h2>
+        {% if products %}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {% for product in products %}
+            <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition product-card">
+                <div class="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="h-full w-full object-cover rounded-lg">
+                    {% else %}
+                    <span class="text-gray-400 text-4xl">📦</span>
+                    {% endif %}
+                </div>
+                <h3 class="font-semibold mb-2 truncate">{{ product.name }}</h3>
+                <p class="text-indigo-600 font-bold mb-2">{{ product.price|floatformat:0 }} ₫</p>
+                <a href="{% url 'pages:product_detail' product.id %}" 
+                   class="block mt-4 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-center">
+                    Xem chi tiết
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <h3 class="font-semibold mb-2">Sản phẩm mẫu</h3>
+                <p class="text-indigo-600 font-bold">1.000.000 ₫</p>
+                <button class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 w-full">
+                    Xem chi tiết
+                </button>
+            </div>
+        </div>
+        {% endif %}
+        <div class="text-center mt-8">
+            <a href="{% url 'pages:products_list' %}" class="text-indigo-600 font-semibold hover:underline">
+                Xem tất cả sản phẩm →
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- AI Recommendations Section -->
+{% if recommended_products %}
+<section class="py-12 bg-white border-t border-b border-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
+                Gợi ý dành riêng cho bạn 
+                <span class="text-xs font-semibold inline-block py-1 px-2.5 uppercase rounded-full text-purple-600 bg-purple-100">AI Personalization</span>
+            </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {% for product in recommended_products %}
+            <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition border border-purple-100 product-card relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-purple-600 text-white text-xxs px-2 py-0.5 rounded-bl font-semibold uppercase">AI Suggest</div>
+                <div class="bg-gray-50 h-48 rounded-lg mb-4 flex items-center justify-center">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="h-full w-full object-cover rounded-lg">
+                    {% else %}
+                    <span class="text-gray-400 text-4xl">📦</span>
+                    {% endif %}
+                </div>
+                <h3 class="font-semibold mb-2 truncate text-gray-800">{{ product.name }}</h3>
+                <p class="text-purple-600 font-bold mb-2">{{ product.price|floatformat:0 }} ₫</p>
+                <a href="{% url 'pages:product_detail' product.id %}" 
+                   class="block mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 text-center font-medium transition">
+                    Xem chi tiết
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Features Section -->
+<section class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+            <div class="text-4xl mb-4">🚚</div>
+            <h3 class="font-semibold text-lg mb-2">Giao hàng nhanh</h3>
+            <p class="text-gray-600">Giao hàng toàn quốc trong 24h</p>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl mb-4">💳</div>
+            <h3 class="font-semibold text-lg mb-2">Thanh toán an toàn</h3>
+            <p class="text-gray-600">Nhiều phương thức thanh toán</p>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl mb-4">🔄</div>
+            <h3 class="font-semibold text-lg mb-2">Đổi trả dễ dàng</h3>
+            <p class="text-gray-600">Đổi trả trong 7 ngày</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

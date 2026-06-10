@@ -1,0 +1,89 @@
+🧪 TESTING FULL E-COMMERCE SYSTEM
+==================================
+
+📦 1. DOCKER CONTAINERS
+----------------------
+[0;32m✅[0m ai-service
+[0;32m✅[0m api-gateway
+[0;32m✅[0m cart-db
+[0;32m✅[0m cart-service
+[0;32m✅[0m frontend-db
+[0;32m✅[0m frontend-service
+[0;32m✅[0m neo4j
+[0;32m✅[0m order-db
+[0;32m✅[0m order-service
+[0;32m✅[0m payment-db
+[0;32m✅[0m payment-service
+[0;32m✅[0m product-db
+[0;32m✅[0m product-service
+[0;32m✅[0m shipping-db
+[0;32m✅[0m shipping-service
+[0;32m✅[0m user-db
+[0;32m✅[0m user-service
+
+🏥 2. HEALTH ENDPOINTS
+---------------------
+[0;32m✅ PASS[0m: Product Service (HTTP 200)
+[0;32m✅ PASS[0m: User Service (HTTP 200)
+[0;32m✅ PASS[0m: Cart Service (HTTP 200)
+[0;32m✅ PASS[0m: Order Service (HTTP 200)
+[0;32m✅ PASS[0m: Payment Service (HTTP 200)
+[0;32m✅ PASS[0m: Shipping Service (HTTP 200)
+[0;32m✅ PASS[0m: Frontend Service (HTTP 200)
+[0;32m✅ PASS[0m: AI Service Health (HTTP 200)
+
+📦 3. PRODUCT SERVICE
+--------------------
+[0;32m✅ PASS[0m: Get Products
+{"success":true,"message":"Products fetched successfully.","data":[{"id":52,"category":{"id":12,"name":"Làm đẹp & Sức khỏe","description":"Mỹ phẩm và sản phẩm chăm sóc sức khỏe","created_at":"2026-06-09T03:39:12.331750Z","updated_at":"2026-06-09T03:39:12.331755Z"},"name":"Máy Đo Huyết Áp Omron","description":"Máy đo huyết áp bắp tay Omron, chính xác cao","price":"1290000.00","stock":79,"sku":"BEAUTY-005","is_active":true,"created_at":"2026-06-09T03:39:12.390926Z","updated_at":"2026-06-09T03:41:50.716305Z"},{"id":51,"category":{"id":12,"name":"Làm đẹp & Sức khỏe","description":"Mỹ phẩm và sản phẩm chăm sóc sức khỏe","created_at":"2026-06-09T03:39:12.331750Z","updated_at":"2026-06-09T03:39:12.331755Z"},"name":"Viên Uống Collagen","description":"Viên uống Collagen Nhật Bản, hộp 30 viên","price":"750000.00","stock":200,"sku":"BEAUTY-004","is_active":true,"created_at":"2026-06-09T03:39:12.389813Z","updated_at":"2026-06-09T03:39:12.389817Z"},{"id":50,"category":{"id":12,"name":"Làm đẹp & Sức khỏe","description":"Mỹ phẩm và sản phẩm chăm sóc sức khỏe","created_at":"2026-06-09T03:39:12.331750Z","updated_at":"2026-06-09T03:39:12.331755Z"},"name":"Máy Massage Cầm Tay","description":"Máy massage cầm tay 6 đầu, 20 cấp độ","price":"890000.00","stock":100,"sku":"BEAUTY-003","is_active":true,"created_at":"2026-06-09T03:39:12.388662Z","updated_at":"2026-06-09T03:39:12.388671Z"},{"id":49,"category":{"id":12,"name":"Làm đẹp & Sức khỏe","description":"Mỹ phẩm và sản phẩm chăm sóc sức khỏe","created_at":"2026-06-09T03:39:12.331750Z","updated_at":"2026-06-09T03:39:12.331755Z"},"name":"Serum Vitamin C","description":"Serum Vitamin C 20%, làm sáng da, mờ thâm","price":"680000.00","stock":150,"sku":"BEAUTY-002","is_active":true,"created_at":"2026-06-09T03:39:12.387620Z","updated_at":"2026-06-09T03:39:12.387625Z"},{"id":48,"category":{"id":12,"name":"Làm đẹp & Sức khỏe","description":"Mỹ phẩm và sản phẩm chăm sóc sức khỏe","created_at":"2026-06-09T03:39:12.331750Z","updated_at":"2026-06-09T03:39:12.331755Z"},"name":"Kem Chống Nắng Anessa","description":"Kem chống nắng Anessa SPF50+ PA++++, chống nước","price":"550000.00","stock":180,"sku":"BEAUTY-001","is_active":true,"created_at":"2026-06-09T03:39:12.386555Z","updated_at":"2026-06-09T03:39:12.386559Z"},{"id":47,"category":{"id":11,"name":"Mẹ & Bé","description":"Đồ dùng cho mẹ và bé","created_at":"2026-06-09T03:39:12.330753Z","updated_at":"2026-06-09T03:39:12.330757Z"},"name":"Bộ Đồ Chơi Xếp Hình","description":"Bộ đồ chơi xếp hình 100 chi tiết, an toàn","price":"180000.00","stock":300,"sku":"BABY-005","is_active":true,"created_at":"2026-06-09T03:39:12.385460Z","updated_at":"2026-06-09T03:39:12.385465Z"},{"id":46,"category":{"id":11,"name":"Mẹ & Bé","description":"Đồ dùng cho mẹ và bé","created_at":"2026-06-09T03:39:12.330753Z","updated_at":"2026-06-09T03:39:12.330757Z"},"name":"Nôi Điện Tự Động","description":"Nôi điện tự động ru, có nhạc và điều khiển","price":"2890000.00","stock":40,"sku":"BABY-004","is_active":true,"created_at":"2026-06-09T03:39:12.384397Z","updated_at":"2026-06-09T03:39:12.384402Z"},{"id":45,"category":{"id":11,"name":"Mẹ & Bé","description":"Đồ dùng cho mẹ và bé","created_at":"2026-06-09T03:39:12.330753Z","updated_at":"2026-06-09T03:39:12.330757Z"},"name":"Xe Đẩy Em Bé 2 Chiều","description":"Xe đẩy em bé 2 chiều, gấp gọn, có mái che","price":"3990000.00","stock":50,"sku":"BABY-003","is_active":true,"created_at":"2026-06-09T03:39:12.383353Z","updated_at":"2026-06-09T03:39:12.383357Z"},{"id":44,"category":{"id":11,"name":"Mẹ & Bé","description":"Đồ dùng cho mẹ và bé","created_at":"2026-06-09T03:39:12.330753Z","updated_at":"2026-06-09T03:39:12.330757Z"},"name":"Bình Sữa Comotomo 250ml","description":"Bình sữa silicon Comotomo 250ml, chống sặc","price":"450000.00","stock":150,"sku":"BABY-002","is_active":true,"created_at":"2026-06-09T03:39:12.382339Z","updated_at":"2026-06-09T03:39:12.382344Z"},{"id":43,"category":{"id":11,"name":"Mẹ & Bé","description":"Đồ dùng cho mẹ và bé","created_at":"2026-06-09T03:39:12.330753Z","updated_at":"2026-06-09T03:39:12.330757Z"},"name":"Tã Bỉm Pampers Newborn","description":"Tã bỉm Pampers Newborn 84 miếng, siêu thấm","price":"320000.00","stock":200,"sku":"BABY-001","is_active":true,"created_at":"2026-06-09T03:39:12.381231Z","updated_at":"2026-06-09T03:39:12.381235Z"}],"pagination":{"count":52,"next":"http://localhost:8001/products/?page=2","previous":null}}
+[0;32m✅ PASS[0m: Get Categories
+{"success":true,"message":"Categories fetched successfully.","data":[{"id":2,"name":"Books","description":"Fiction, non-fiction, and technical books.","created_at":"2026-06-09T03:38:38.236086Z","updated_at":"2026-06-09T03:38:38.236106Z"},{"id":1,"name":"Electronics","description":"Electronic devices and accessories.","created_at":"2026-06-09T03:38:38.232463Z","updated_at":"2026-06-09T03:38:38.232484Z"},{"id":4,"name":"Laptop & Máy tính","description":"Laptop, PC và linh kiện máy tính","created_at":"2026-06-09T03:39:12.322979Z","updated_at":"2026-06-09T03:39:12.322986Z"},{"id":12,"name":"Làm đẹp & Sức khỏe","description":"Mỹ phẩm và sản phẩm chăm sóc sức khỏe","created_at":"2026-06-09T03:39:12.331750Z","updated_at":"2026-06-09T03:39:12.331755Z"},{"id":11,"name":"Mẹ & Bé","description":"Đồ dùng cho mẹ và bé","created_at":"2026-06-09T03:39:12.330753Z","updated_at":"2026-06-09T03:39:12.330757Z"},{"id":9,"name":"Sách & Văn phòng phẩm","description":"Sách, vở, dụng cụ văn phòng","created_at":"2026-06-09T03:39:12.328542Z","updated_at":"2026-06-09T03:39:12.328547Z"},{"id":10,"name":"Thể thao & Du lịch","description":"Dụng cụ thể thao và đồ du lịch","created_at":"2026-06-09T03:39:12.329707Z","updated_at":"2026-06-09T03:39:12.329711Z"},{"id":6,"name":"Thời trang Nam","description":"Quần áo, giày dép nam","created_at":"2026-06-09T03:39:12.325390Z","updated_at":"2026-06-09T03:39:12.325396Z"},{"id":7,"name":"Thời trang Nữ","description":"Quần áo, giày dép nữ","created_at":"2026-06-09T03:39:12.326496Z","updated_at":"2026-06-09T03:39:12.326501Z"},{"id":5,"name":"Âm thanh & Phụ kiện","description":"Tai nghe, loa và phụ kiện âm thanh","created_at":"2026-06-09T03:39:12.324345Z","updated_at":"2026-06-09T03:39:12.324351Z"}],"pagination":{"count":12,"next":"http://localhost:8001/products/categories/?page=2","previous":null}}
+
+👤 4. USER SERVICE (Registration & Login)
+-----------------------------------------
+[0;32m✅ PASS[0m: User Registration
+[0;32m✅ PASS[0m: User Login (Token obtained)
+
+🛒 5. CART SERVICE
+-----------------
+[0;32m✅ PASS[0m: Create Cart (ID: 2)
+[0;32m✅ PASS[0m: Add Item to Cart
+
+📋 6. ORDER SERVICE
+------------------
+[0;32m✅ PASS[0m: Create Order (ID: 2)
+
+💳 7. PAYMENT SERVICE
+--------------------
+[0;32m✅ PASS[0m: Create Payment
+
+🚚 8. SHIPPING SERVICE
+---------------------
+[0;32m✅ PASS[0m: Create Shipment
+
+🤖 9. AI SERVICE
+---------------
+[0;32m✅ PASS[0m: AI Health
+{"status":"healthy","version":"1.0.0","components":{"lstm":"healthy","graph":"healthy","rag":"healthy","hybrid":"healthy","services":"healthy"}}
+
+🌐 10. FRONTEND PAGES
+--------------------
+[0;32m✅ PASS[0m: Home Page (HTTP 200)
+[0;32m✅ PASS[0m: Products Page (HTTP 200)
+[0;32m✅ PASS[0m: Login Page (HTTP 200)
+[0;32m✅ PASS[0m: Register Page (HTTP 200)
+
+🔍 11. CATEGORY FILTER
+---------------------
+[0;32m✅ PASS[0m: Laptop & Máy tính (5 products)
+[0;32m✅ PASS[0m: Điện thoại & Tablet (5 products)
+[0;32m✅ PASS[0m: Thời trang Nam (5 products)
+
+==================================
+📊 TEST SUMMARY
+==================================
+Total Tests:  25
+Passed:       [0;32m25[0m
+Failed:       [0;31m0[0m
+
+[0;32m✅ ALL TESTS PASSED![0m

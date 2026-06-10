@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Review Report - E-Commerce Microservices</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #18202f;
+      --muted: #667085;
+      --line: #d9dee8;
+      --critical: #b42318;
+      --high: #b54708;
+      --medium: #175cd3;
+      --low: #475467;
+      --ok: #067647;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    header {
+      background: #18202f;
+      color: #fff;
+      padding: 32px 24px;
+      border-bottom: 4px solid #7c3aed;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 24px auto 56px;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.2; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 22px; margin-bottom: 14px; }
+    h3 { font-size: 17px; margin-bottom: 8px; }
+    p { margin: 0 0 12px; }
+    code {
+      background: #eef2f7;
+      border: 1px solid #d7dde8;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.92em;
+    }
+
+    .subtitle {
+      color: #cdd5e1;
+      margin-top: 10px;
+      max-width: 860px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .meta div,
+    .card,
+    .finding,
+    .summary-table,
+    .checklist {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .meta div {
+      padding: 14px;
+      color: var(--text);
+    }
+
+    .label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 28px;
+    }
+
+    .card { padding: 18px; }
+    .count { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .critical { color: var(--critical); }
+    .high { color: var(--high); }
+    .medium { color: var(--medium); }
+    .low { color: var(--low); }
+    .ok { color: var(--ok); }
+
+    section { margin-top: 28px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef2f7;
+      font-size: 13px;
+      color: #344054;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .finding {
+      padding: 18px;
+      margin: 14px 0;
+      border-left-width: 5px;
+    }
+
+    .finding.critical-border { border-left-color: var(--critical); }
+    .finding.high-border { border-left-color: var(--high); }
+    .finding.medium-border { border-left-color: var(--medium); }
+    .finding.low-border { border-left-color: var(--low); }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+      color: #fff;
+    }
+
+    .badge.critical { background: var(--critical); color: #fff; }
+    .badge.high { background: var(--high); color: #fff; }
+    .badge.medium { background: var(--medium); color: #fff; }
+    .badge.low { background: var(--low); color: #fff; }
+
+    .evidence {
+      margin: 10px 0;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid #e4e7ec;
+      border-radius: 6px;
+      color: #344054;
+    }
+
+    ul { margin: 8px 0 0 20px; padding: 0; }
+    li { margin: 5px 0; }
+
+    .note {
+      padding: 14px 16px;
+      border: 1px solid #b2ddff;
+      background: #eff8ff;
+      border-radius: 8px;
+      color: #1849a9;
+    }
+
+    @media (max-width: 900px) {
+      .meta, .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      h1 { font-size: 24px; }
+      .meta, .grid { grid-template-columns: 1fr; }
+      main { width: calc(100% - 20px); }
+      th, td { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>System Review Report</h1>
+    <p class="subtitle">Static review of the e-commerce microservices system, covering backend APIs, frontend integration, security, reliability, and UI/UX issues found in the current workspace.</p>
+    <div class="meta">
+      <div><span class="label">Review date</span>2026-06-09</div>
+      <div><span class="label">System</span>Django/FastAPI microservices</div>
+      <div><span class="label">Method</span>Source review, no runtime test run</div>
+      <div><span class="label">Report file</span><code>review.html</code></div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Executive Summary</h2>
+      <p>The codebase has a functional microservice shape, but several trust boundaries are weak. The most serious problems are publicly writable product and stock endpoints, client-controlled order/payment/shipping state, tamperable prices and totals, and frontend XSS/CSRF risks around the chatbot.</p>
+      <div class="grid">
+        <div class="card"><div class="count critical">4</div><div>Critical findings</div></div>
+        <div class="card"><div class="count high">6</div><div>High findings</div></div>
+        <div class="card"><div class="count medium">8</div><div>Medium findings</div></div>
+        <div class="card"><div class="count low">3</div><div>Low findings</div></div>
+      </div>
+      <div class="note">
+        Priority: lock down product/stock writes, recompute prices server-side, restrict state transitions, add request timeouts, and remove unsafe chatbot HTML rendering before treating the system as production-ready.
+      </div>
+    </section>
+
+    <section>
+      <h2>Findings Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Severity</th>
+            <th>Area</th>
+            <th>Finding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>B-01</td><td>Critical</td><td>Backend/API</td><td>Product and category write APIs are public.</td></tr>
+          <tr><td>B-02</td><td>Critical</td><td>Backend/API</td><td>Stock reserve/release APIs are public and can alter inventory.</td></tr>
+          <tr><td>B-03</td><td>Critical</td><td>Backend/API</td><td>Order totals and item prices are client-controlled.</td></tr>
+          <tr><td>F-01</td><td>Critical</td><td>Frontend security</td><td>Chatbot messages are inserted with <code>innerHTML</code>.</td></tr>
+          <tr><td>B-04</td><td>High</td><td>Backend/API</td><td>Users can update or delete their own orders directly.</td></tr>
+          <tr><td>B-05</td><td>High</td><td>Backend/API</td><td>Payment amount, status, provider, and transaction ID are client-controlled.</td></tr>
+          <tr><td>B-06</td><td>High</td><td>Backend/API</td><td>Shipment status, carrier, and tracking number are client-controlled.</td></tr>
+          <tr><td>F-02</td><td>High</td><td>Frontend security</td><td>Chatbot proxy disables CSRF validation.</td></tr>
+          <tr><td>F-03</td><td>High</td><td>Reliability</td><td>Frontend service calls have no HTTP timeouts.</td></tr>
+          <tr><td>S-01</td><td>High</td><td>Deployment/security</td><td>Default secrets and hardcoded Neo4j credentials exist.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Backend And API Findings</h2>
+
+      <article class="finding critical-border">
+        <h3><span class="badge critical">Critical</span>B-01 Product and category write APIs are public</h3>
+        <p>Product service global REST permissions are empty, and create/update/delete handlers do not define a permission class.</p>
+        <div class="evidence">Evidence: <code>services/product-service/product_service/settings.py:88-94</code>, <code>services/product-service/products/views.py:22-30</code>, <code>:40-50</code>, <code>:64-69</code>, <code>:80-91</code>.</div>
+        <p>Impact: anyone who can reach the product service or API gateway can create, modify, or delete catalog data.</p>
+        <p>Fix: use authenticated admin permissions for product/category writes. Keep only read endpoints public.</p>
+      </article>
+
+      <article class="finding critical-border">
+        <h3><span class="badge critical">Critical</span>B-02 Stock reserve and release endpoints are unauthenticated</h3>
+        <p>The product stock check/reserve/release views explicitly set empty authentication and permission classes, even though <code>InternalServiceTokenPermission</code> exists.</p>
+        <div class="evidence">Evidence: <code>services/product-service/products/views.py:94-118</code>, <code>:144-162</code>, <code>api-gateway/conf.d/default.conf</code> proxies public <code>/products/</code>.</div>
+        <p>Impact: external callers can reserve stock to create false scarcity or release stock to inflate inventory.</p>
+        <p>Fix: require <code>X-Service-Token</code> or equivalent internal authentication on reserve/release; expose check as read-only if needed.</p>
+      </article>
+
+      <article class="finding critical-border">
+        <h3><span class="badge critical">Critical</span>B-03 Order totals and item prices are trusted from client input</h3>
+        <p>The order serializer accepts <code>total_amount</code> and per-item <code>unit_price</code>. The order service validates stock but does not fetch authoritative prices from the product service before saving.</p>
+        <div class="evidence">Evidence: <code>services/order-service/orders/serializers.py:6-37</code>, <code>services/order-service/orders/views.py:33-46</code>, <code>services/order-service/orders/services.py:89-99</code>.</div>
+        <p>Impact: a direct API caller can create orders with manipulated totals or item prices.</p>
+        <p>Fix: accept only product IDs and quantities from clients. Fetch product prices server-side, calculate subtotal/shipping/total in the order service, and ignore submitted price fields.</p>
+      </article>
+
+      <article class="finding high-border">
+        <h3><span class="badge high">High</span>B-04 Users can mutate orders after creation</h3>
+        <p>The order detail endpoint checks ownership but lets the owner update all writable serializer fields, including <code>status</code>, <code>total_amount</code>, and <code>shipping_address</code>. It also allows direct delete.</p>
+        <div class="evidence">Evidence: <code>services/order-service/orders/views.py:57-69</code>, <code>services/order-service/orders/serializers.py:23-37</code>.</div>
+        <p>Impact: users can cancel, alter, or corrupt order records outside the intended checkout flow.</p>
+        <p>Fix: expose narrow action endpoints for allowed transitions, or make user-facing order updates read-only after creation.</p>
+      </article>
+
+      <article class="finding high-border">
+        <h3><span class="badge high">High</span>B-05 Payment records are client-controlled</h3>
+        <p>Payment creation validates order access but accepts <code>amount</code>, <code>provider</code>, <code>transaction_id</code>, and <code>status</code>. The update endpoint repeats the same broad serializer behavior.</p>
+        <div class="evidence">Evidence: <code>services/payment-service/payments/serializers.py:6-10</code>, <code>services/payment-service/payments/views.py:51-58</code>, <code>:69-76</code>.</div>
+        <p>Impact: a user can create or modify payment records that do not match the real order amount or payment processor state.</p>
+        <p>Fix: derive amount from the order service, make status processor-controlled, and make transaction IDs server/provider generated.</p>
+      </article>
+
+      <article class="finding high-border">
+        <h3><span class="badge high">High</span>B-06 Shipment records are client-controlled</h3>
+        <p>Shipment creation and update allow caller-supplied carrier, tracking number, and status after only checking order ownership.</p>
+        <div class="evidence">Evidence: <code>services/shipping-service/shipments/views.py:51-58</code>, <code>:69-76</code>, <code>services/shipping-service/shipments/serializers.py:6-10</code>.</div>
+        <p>Impact: users can mark their shipment as pending/shipped/delivered or inject arbitrary tracking information.</p>
+        <p>Fix: restrict customer input to address fields; let shipping workflows or staff-only endpoints control carrier, tracking, and status.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>B-07 Product sorting requested by frontend is ignored by backend</h3>
+        <p>The frontend sends <code>ordering</code>, but <code>ProductService.list_products</code> never reads or applies it.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/pages/views.py:141-149</code>, <code>services/product-service/products/services.py:47-84</code>.</div>
+        <p>Impact: users select sorting options but results remain in database default order.</p>
+        <p>Fix: whitelist allowed ordering fields and apply <code>queryset.order_by(...)</code>.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>B-08 Price filters use mismatched query names</h3>
+        <p>The frontend sends <code>price_min</code> and <code>price_max</code>, while the product service expects <code>min_price</code> and <code>max_price</code>.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/pages/views.py:154-157</code>, <code>services/product-service/products/services.py:52-79</code>.</div>
+        <p>Impact: product price filtering appears available in the UI but is ineffective.</p>
+        <p>Fix: align query parameter names or accept both names in the product service.</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Frontend, Security, And Reliability Findings</h2>
+
+      <article class="finding critical-border">
+        <h3><span class="badge critical">Critical</span>F-01 Chatbot rendering enables XSS</h3>
+        <p>The chatbot appends user text and AI responses with <code>innerHTML</code> after only replacing newlines. This is not sanitization.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/templates/base/base.html:157-177</code>.</div>
+        <p>Impact: malicious text returned by the AI service, or typed by a user, can execute script in the storefront page.</p>
+        <p>Fix: render text with <code>textContent</code> and build line breaks as DOM nodes, or use a vetted sanitizer with a strict allowlist.</p>
+      </article>
+
+      <article class="finding high-border">
+        <h3><span class="badge high">High</span>F-02 Chatbot proxy is CSRF-exempt</h3>
+        <p>The frontend JavaScript sends a CSRF token, but the Django view is decorated with <code>@csrf_exempt</code>.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/pages/views.py:50-66</code>, <code>services/frontend_service/templates/base/base.html:130-138</code>.</div>
+        <p>Impact: other sites can trigger chatbot requests through the user's browser, creating abuse and rate-cost exposure.</p>
+        <p>Fix: remove <code>@csrf_exempt</code>, require CSRF, validate content type, and add rate limiting.</p>
+      </article>
+
+      <article class="finding high-border">
+        <h3><span class="badge high">High</span>F-03 Frontend service calls have no timeout</h3>
+        <p>The base API client uses <code>requests</code> without timeout on every HTTP method.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/pages/api_client.py:25-55</code>.</div>
+        <p>Impact: one slow or unavailable service can hang a web request until worker exhaustion.</p>
+        <p>Fix: add connect/read timeouts, retry only safe operations, and show user-friendly degraded states.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>F-04 Permissive CORS with credentials</h3>
+        <p>The frontend service enables all origins and credentials together.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/frontend_service/settings.py:144-146</code>; AI service also uses wildcard CORS at <code>services/ai-service/main.py:52-59</code>.</div>
+        <p>Impact: browser access policy is overly broad and easy to misconfigure into credential leakage.</p>
+        <p>Fix: set explicit allowed origins per environment and disable credentials unless required.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>F-05 Unsafe production defaults</h3>
+        <p>The frontend defaults to a hardcoded secret and <code>DEBUG=True</code>.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/frontend_service/settings.py:27-33</code>.</div>
+        <p>Impact: accidental deployment without environment variables exposes debug behavior and predictable signing secrets.</p>
+        <p>Fix: fail startup when required secrets are missing and default debug to false.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>F-06 Local fallback service URLs are wrong</h3>
+        <p>Frontend defaults map user service to port 8001 and product service to port 8002, but compose maps product to 8001 and user to 8002.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/frontend_service/settings.py:154-161</code>, <code>docker-compose.yml</code> service ports.</div>
+        <p>Impact: running the frontend outside Docker without environment overrides will call the wrong services.</p>
+        <p>Fix: align defaults with compose or require explicit environment variables.</p>
+      </article>
+
+      <article class="finding low-border">
+        <h3><span class="badge low">Low</span>F-07 Tailwind CDN is used in the application shell</h3>
+        <p>The base template loads Tailwind through the CDN instead of a built CSS bundle.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/templates/base/base.html:8-13</code>.</div>
+        <p>Impact: production pages depend on an external script and lose CSS optimization/control.</p>
+        <p>Fix: compile Tailwind during build and serve a static CSS asset.</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>UI And UX Findings</h2>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>U-01 Pagination links are malformed</h3>
+        <p>The backend returns full next/previous links, but the template places that full URL inside <code>?page=...</code>.</p>
+        <div class="evidence">Evidence: <code>services/product-service/product_service/api.py:10-21</code>, <code>services/frontend_service/pages/templates/pages/products/list.html:103-115</code>.</div>
+        <p>Impact: "Trang sau" and "Trang truoc" can generate URLs such as <code>?page=http://...</code>.</p>
+        <p>Fix: pass page numbers to the template, or render backend-provided URLs directly after normalizing host and query parameters.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>U-02 Checkout fields and selected methods are ignored</h3>
+        <p>The checkout form collects full name, phone, shipping method, and payment method, but the view only reads shipping address and always creates standard shipping/COD payment.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/pages/templates/pages/checkout/checkout.html:20-99</code>, <code>services/frontend_service/pages/views.py:299-350</code>, <code>services/frontend_service/pages/api_client.py:213-244</code>.</div>
+        <p>Impact: customers can choose express shipping or bank transfer, but the submitted order does not reflect their selection.</p>
+        <p>Fix: persist contact fields and honor selected shipping/payment methods in order, payment, and shipment creation.</p>
+      </article>
+
+      <article class="finding medium-border">
+        <h3><span class="badge medium">Medium</span>U-03 Cart badge always shows zero</h3>
+        <p>The navbar hardcodes a zero cart count and the JavaScript update function is a TODO.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/templates/base/navbar.html:37-44</code>, <code>services/frontend_service/static/js/main.js:21-35</code>.</div>
+        <p>Impact: users receive incorrect cart feedback after adding products.</p>
+        <p>Fix: expose cart count in the session context or fetch it with an authenticated endpoint.</p>
+      </article>
+
+      <article class="finding low-border">
+        <h3><span class="badge low">Low</span>U-04 Message alert classes do not map to Tailwind defaults</h3>
+        <p>Django message tags like <code>success</code> and <code>error</code> are interpolated into Tailwind color class names, but Tailwind does not define colors named success/error by default.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/templates/base/base.html:21-29</code>.</div>
+        <p>Impact: alerts may render without intended colors.</p>
+        <p>Fix: map message tags to real Tailwind colors such as green, red, yellow, and blue.</p>
+      </article>
+
+      <article class="finding low-border">
+        <h3><span class="badge low">Low</span>U-05 Mobile navigation lacks a compact search/menu flow</h3>
+        <p>The search bar is hidden below the medium breakpoint and there is no mobile replacement. The account menu depends on hover, which is unreliable on touch devices.</p>
+        <div class="evidence">Evidence: <code>services/frontend_service/templates/base/navbar.html:12-29</code>, <code>:46-64</code>.</div>
+        <p>Impact: mobile users lose primary search access and may struggle to open account links.</p>
+        <p>Fix: add a mobile search control and click/tap-driven account menu state.</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Deployment And Configuration Findings</h2>
+
+      <article class="finding high-border">
+        <h3><span class="badge high">High</span>S-01 Hardcoded Neo4j credentials in compose</h3>
+        <p>The Docker Compose file includes a static Neo4j password and repeats it in the healthcheck and AI service environment.</p>
+        <div class="evidence">Evidence: <code>docker-compose.yml:347-380</code>.</div>
+        <p>Impact: shared credentials are easy to leak and hard to rotate across environments.</p>
+        <p>Fix: move credentials to environment variables or secrets, and fail startup when defaults are used outside development.</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Recommended Fix Order</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Priority</th>
+            <th>Work</th>
+            <th>Expected result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Protect product/category writes and stock reserve/release endpoints.</td><td>Stops unauthenticated catalog and inventory mutation.</td></tr>
+          <tr><td>2</td><td>Move pricing, totals, payment amount, and state transitions to backend-controlled logic.</td><td>Prevents checkout and financial tampering.</td></tr>
+          <tr><td>3</td><td>Fix chatbot XSS and restore CSRF protection.</td><td>Reduces browser-side compromise and abuse risk.</td></tr>
+          <tr><td>4</td><td>Add service timeouts, stricter CORS, and secret validation.</td><td>Improves reliability and deployment safety.</td></tr>
+          <tr><td>5</td><td>Repair filters, sorting, pagination, cart count, checkout method handling, and mobile navigation.</td><td>Improves customer-facing correctness and UX.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

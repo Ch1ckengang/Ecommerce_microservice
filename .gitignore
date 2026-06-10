@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info
+*.egg
+dist/
+build/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker volumes
+**/data/
+!services/ai-service/data/
+
+# Model files (large binary files)
+*.pth
+*.pkl
+*.bin
+*.h5
+*.ckpt
+
+# Keep example/config files
+!*_example.*
+!*.example
+
+# Neo4j
+neo4j/data/
+neo4j/logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp

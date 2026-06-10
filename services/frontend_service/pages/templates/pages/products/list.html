@@ -1,0 +1,121 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Sản phẩm - E-Commerce{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-4">Bộ lọc</h3>
+                
+                <form method="GET" action="{% url 'pages:products_list' %}">
+                    <!-- Search -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tìm kiếm</label>
+                        <input type="text" name="search" value="{{ search }}" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                               placeholder="Tên sản phẩm...">
+                    </div>
+                    
+                    <!-- Category -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Danh mục</label>
+                        <select name="category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="">Tất cả</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat }}" {% if category == cat %}selected{% endif %}>{{ cat }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Price Range -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Khoảng giá</label>
+                        <div class="flex gap-2">
+                            <input type="number" name="min_price" value="{{ min_price }}" 
+                                   class="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                   placeholder="Từ">
+                            <input type="number" name="max_price" value="{{ max_price }}" 
+                                   class="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                   placeholder="Đến">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">
+                        Áp dụng
+                    </button>
+                </form>
+            </div>
+        </aside>
+        
+        <!-- Products Grid -->
+        <main class="flex-1">
+            <!-- Sorting -->
+            <div class="bg-white rounded-lg shadow-md p-4 mb-6 flex justify-between items-center">
+                <p class="text-gray-600">Tìm thấy {{ total }} sản phẩm</p>
+                <form method="GET" class="flex items-center gap-2">
+                    <input type="hidden" name="search" value="{{ search }}">
+                    <input type="hidden" name="category" value="{{ category }}">
+                    <input type="hidden" name="min_price" value="{{ min_price }}">
+                    <input type="hidden" name="max_price" value="{{ max_price }}">
+                    <label class="text-sm text-gray-600">Sắp xếp:</label>
+                    <select name="ordering" onchange="this.form.submit()" 
+                            class="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="-created_at" {% if ordering == '-created_at' %}selected{% endif %}>Mới nhất</option>
+                        <option value="price" {% if ordering == 'price' %}selected{% endif %}>Giá thấp đến cao</option>
+                        <option value="-price" {% if ordering == '-price' %}selected{% endif %}>Giá cao đến thấp</option>
+                        <option value="name" {% if ordering == 'name' %}selected{% endif %}>Tên A-Z</option>
+                    </select>
+                </form>
+            </div>
+            
+            <!-- Products -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {% for product in products %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition product-card">
+                    <a href="{% url 'pages:product_detail' product.id %}">
+                        <div class="h-48 bg-gray-200 flex items-center justify-center">
+                            {% if product.image %}
+                            <img src="{{ product.image }}" alt="{{ product.name }}" class="h-full w-full object-cover">
+                            {% else %}
+                            <span class="text-4xl">📦</span>
+                            {% endif %}
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2 truncate">{{ product.name }}</h3>
+                            <p class="text-sm text-gray-600 mb-2 line-clamp-2">{{ product.description|truncatewords:10 }}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-indigo-600">{{ product.price|floatformat:0 }} ₫</span>
+                                <span class="text-xs text-gray-500">Còn {{ product.stock }} sp</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-span-full text-center py-12">
+                    <p class="text-gray-500 text-lg">Không tìm thấy sản phẩm nào</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if previous or next %}
+            <div class="mt-8 flex justify-center gap-2">
+                {% if previous %}
+                <a href="?page={{ previous }}" class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                    Trang trước
+                </a>
+                {% endif %}
+                {% if next %}
+                <a href="?page={{ next }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    Trang sau
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </main>
+    </div>
+</div>
+{% endblock %}
